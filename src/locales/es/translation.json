@@ -1,0 +1,30 @@
+{
+  "title": "Podcaster",
+  "details": {
+    "description": "Descripción",
+    "date": "Fecha",
+    "title": "Título",
+    "duration": "Duración",
+    "episodes": "Episodios: {{count}}",
+    "author": "Autor",
+    "podcastBy": "{{title}} hecho por: {{author}}"
+  },
+
+  "navigation": {
+    "goback": "Retroceder"
+  },
+  "languages": {
+    "en": "Inglés",
+    "es": "Castellano"
+  },
+  "homepage": {
+    "filter": "Filtrar por titulo o autor"
+  },
+  "description": "Podcaster es un lugar en el que podras escuchar el TOP100 de los mejores podcast de la red",
+  "loading": "Cargando...",
+  "trackNotFound": "Pista no encontrada",
+  "errorLoadingTrack": "Error cargando la pista",
+  "errorButDownload": "Ha ocurrido un error mientras se cargaba la pista, puedes descargarla o intentarlo de nuevo",
+  "tryAgain": "Intentarlo de nuevo",
+  "download": "Descargar"
+}

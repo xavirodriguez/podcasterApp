@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PodcastInfo  /> should match snapshot 1`] = `
+.c0 {
+  width: 80%;
+  margin: 0 auto;
+  display: block;
+}
+
+<img
+  class="c0"
+  src=""
+/>
+`;

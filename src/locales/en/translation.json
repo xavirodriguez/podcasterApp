@@ -1,0 +1,30 @@
+{
+  "title": "Podcaster",
+  "languages": {
+    "en": "English",
+    "es": "Spanish"
+  },
+  "navigation": {
+    "goback": "Go back"
+  },
+  "details": {
+    "description": "Description",
+    "title": "Title",
+    "date": "Date",
+    "duration": "Duration",
+    "episodes": "Episodes: {{count}}",
+    "author": "Author",
+    "podcastBy": "{{title}} by {{author}}",
+    "episodes_plural": ""
+  },
+  "homepage": {
+    "filter": "Filter by title or author"
+  },
+  "description": "Podcaster is a site where you can listen to TOP100 online streams",
+  "loading": "Loading...",
+  "trackNotFound": "Track not found",
+  "errorLoadingTrack": "Error loading track",
+  "errorButDownload": "An error happend while loading the track, but you can download it or try it again",
+  "tryAgain": "Try again",
+  "download": "Download"
+}

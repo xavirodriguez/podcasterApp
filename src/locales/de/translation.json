@@ -1,0 +1,47 @@
+{
+  "navigation": {
+    "goback": "Go back"
+  },
+  "languages": {
+    "en": "",
+    "es": ""
+  },
+  "someThing": "default value",
+  "routingFeature": {
+    "description": ""
+  },
+  "feedbackFeature": {
+    "title": "",
+    "description": ""
+  },
+  "scaffoldingFeature": {
+    "title": "",
+    "description": ""
+  },
+  "i18nFeature": {
+    "title": "",
+    "description": ""
+  },
+  "homepage": {
+    "filter": "Filter by title or author"
+  },
+  "description": "Podcaster is a site where you can listen to TOP100 online streams",
+  "loading": "Loading...",
+  "title": "Title",
+  "details": {
+    "description": "Description",
+    "date": "Date",
+    "duration": "Duration",
+    "author": "Author",
+    "podcastBy": "",
+    "episodes": "",
+    "episodes_plural": ""
+  },
+  "There was an error": "",
+  "Download": "",
+  "trackNotFound": "Track not found",
+  "errorLoadingTrack": "Error loading track",
+  "errorButDownload": "An error happend while loading the track, but you can download it or try it again",
+  "tryAgain": "Try again",
+  "download": "Download"
+}
