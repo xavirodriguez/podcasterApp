@@ -4,13 +4,14 @@ import { usePodcastsSlice } from 'app/slices/podcastSlice';
 import { selectPodcasts } from 'app/slices/podcastSlice/selectors';
 import { t } from 'i18next';
 import * as React from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { messages } from './messages';
+import { useFilterPodcasts } from 'app/hooks/useFilterPodcasts';
 
 export function HomePage() {
   const [searchText, setSearchText] = useState('');
@@ -22,22 +23,10 @@ export function HomePage() {
     dispatch(actions.fetchPodcasts(''));
   }, [dispatch, actions]);
 
-  const filteredPodcasts = useMemo(() => {
-    return podcasts.items.filter(podcast => {
-      const titleMatch = podcast.title
-        .toLowerCase()
-        .includes(searchText.toLowerCase());
-      const authorMatch = podcast.author
-        .toLowerCase()
-        .includes(searchText.toLowerCase());
-
-      return titleMatch || authorMatch;
-    });
-  }, [searchText, podcasts.items]);
+  const filteredPodcasts = useFilterPodcasts(podcasts, searchText);
 
   const handleSearch = event => {
     const searchText = event.target.value;
-
     setSearchText(searchText);
   };
 

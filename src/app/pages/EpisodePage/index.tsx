@@ -12,15 +12,15 @@ import { PodcastInfo } from 'app/components/PodcastInfo';
 import { usePodcastsSlice } from 'app/slices/podcastSlice';
 import { selectPodcasts } from 'app/slices/podcastSlice/selectors';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { Podcast } from 'types/Podcast';
-import { Track } from 'types/Track';
-
 import { messages } from './messages';
+import { useLoadingError } from 'app/hooks/useLoadingError';
+import { usePodcastData } from 'app/hooks/usePodcastData';
+import { EpisodeTags } from './EpisodeTags';
 
 interface Props {}
 
@@ -29,58 +29,33 @@ export default function EpisodePage(props: Props) {
   const podcasts = useSelector(selectPodcasts);
   const { actions } = usePodcastsSlice();
   const dispatch = useDispatch();
-  const [podcast, setPodcast] = useState<Podcast>();
-  const [episode, setEpisode] = useState<Track>({
-    trackName: 'default',
-    releaseDate: '',
-    episodeUrl: '',
-    description: '',
-    trackTimeMillis: '',
-  });
   const { id, trackId } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+
+  const {
+    loading,
+    setLoading,
+    error,
+    handleLoadedData,
+    handleError,
+    tryAgain,
+  } = useLoadingError();
+
+  const { podcast, episode } = usePodcastData(
+    id,
+    trackId,
+    dispatch,
+    actions,
+    podcasts,
+    setLoading,
+  );
 
   useEffect(() => {
     dispatch(actions.fetchTracks(id));
   }, [actions, dispatch, id]);
 
-  useEffect(() => {
-    setLoading(true);
-    const podcast = podcasts.items.find(podcast => podcast.id === id);
-    const trackIdNumber = parseInt(trackId ?? '0');
-
-    if (
-      podcast &&
-      podcast.tracks?.length &&
-      podcast.tracks.length >= trackIdNumber
-    ) {
-      const epi = podcast.tracks[trackIdNumber];
-
-      setEpisode(epi);
-      setPodcast(podcast);
-    } else {
-      console.log(t(messages.trackNotFound()));
-    }
-    setLoading(false);
-  }, [id, podcasts, t, trackId]);
-
-  const handleLoadedData = () => {
-    setLoading(false);
-  };
-
-  const handleError = e => {
-    setLoading(false);
-    setError(true);
-  };
-
-  const tryAgain = () => {
-    setLoading(true);
-    setError(false);
-  };
-
   return (
     <FlexContainer>
+      <EpisodeTags podcast={podcast} episode={episode} />
       <Sidebar>
         {podcast && (
           <PodcastInfo
@@ -92,31 +67,33 @@ export default function EpisodePage(props: Props) {
         )}
       </Sidebar>
       <MainSection>
-        <Box>
-          <h2>{episode.trackName}</h2>
-          {episode.description}
-          <hr />
-          {loading && <Loading />}
-          {!error && episode.episodeUrl && (
-            <Player
-              controls
-              preload="auto"
-              onLoadedData={handleLoadedData}
-              onError={handleError}
-            >
-              <source src={episode.episodeUrl} />
-            </Player>
-          )}
-          {error && (
-            <>
-              <p>{t(messages.errorButDownload())}.</p>
-              <a href={episode.episodeUrl}>{t(messages.download())}</a>
-              <StyledLink onClick={tryAgain}>
-                {t(messages.tryAgain())}
-              </StyledLink>
-            </>
-          )}
-        </Box>
+        {episode && (
+          <Box>
+            <h2>{episode.trackName}</h2>
+            {episode.description}
+            <hr />
+            {loading && <Loading />}
+            {!error && episode.episodeUrl && (
+              <Player
+                controls
+                preload="auto"
+                onLoadedData={handleLoadedData}
+                onError={handleError}
+              >
+                <source src={episode.episodeUrl} />
+              </Player>
+            )}
+            {error && (
+              <>
+                <p>{t(messages.errorButDownload())}.</p>
+                <a href={episode.episodeUrl}>{t(messages.download())}</a>
+                <StyledLink onClick={tryAgain}>
+                  {t(messages.tryAgain())}
+                </StyledLink>
+              </>
+            )}
+          </Box>
+        )}
       </MainSection>
     </FlexContainer>
   );

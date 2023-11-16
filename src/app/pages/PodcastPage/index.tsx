@@ -35,7 +35,6 @@ export const PodcastPage = () => {
 
   useEffect(() => {
     const podcast = podcasts.items.find(podcast => podcast.id === id);
-
     if (podcast) {
       setPodcastData(podcast);
     } else {
